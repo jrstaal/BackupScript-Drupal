@@ -78,15 +78,14 @@ fi
 # Dump database into SQL file
 if [ $DATABASEBACKUP = "YES" ]; then
 status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-#PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME  > $BACKUPPATH/$DBNAME.$TIJD.sql
-#PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME  > $BACKUPPATH/$SITENAME.sql
-PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$SITENAME.sql.gz
+	if ! PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$SITENAME.sql.gz; then
+	exit_error "Database backup failed, aborting!"
+	fi
 fi
 
 # Backup files dir
 if [ $FILESBACKUP = "YES" ]; then
 status_message "** Performing FilesBackup from \"$WEBROOT/$DRUPALSITEDIR\" **"
-	#if ! rsync -avrog --delete $WEBROOT/$DRUPALSITEDIR $BACKUPPATH; then
 	if ! tar czf $BACKUPPATH/$SITENAME.filesbackup.tar.gz -C $WEBROOT/$DRUPALSITEDIR .; then
 	exit_error "Files backup failed, aborting!"
 	fi
