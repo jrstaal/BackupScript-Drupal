@@ -86,7 +86,7 @@ fi
 
 # Delete old backups and keep this backup plus one older backup
 status_message "** Deleting oldest backup **"
-if ! ls -d */ | head -n -2  | xargs rm -rf; then
+if ! ls -d $BACKUPPATH/*/ | head -n -2  | xargs rm -rf; then
 	exit_error "Failed to delete old backup folder, aborting!"
 fi
 
