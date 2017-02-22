@@ -2,7 +2,7 @@
 
 # Backupscript
 
-status_message "** Start creating the backup **"
+
 
 currentdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -39,6 +39,7 @@ status_message() {
   log_message "$1"
   echo -e "$1..."
 }
+status_message "** Start creating the backup **"
 
 # Function to show error message and exit
 exit_error() {
