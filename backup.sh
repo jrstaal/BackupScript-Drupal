@@ -85,7 +85,8 @@ fi
 # Backup files dir
 if [ $FILESBACKUP = "YES" ]; then
 status_message "** Performing FilesBackup from \"$WEBROOT/$DRUPALSITEDIR\" **"
-	if ! rsync -avrog --delete $WEBROOT/$DRUPALSITEDIR $BACKUPPATH; then
+	#if ! rsync -avrog --delete $WEBROOT/$DRUPALSITEDIR $BACKUPPATH; then
+	if ! tar -zpcf $BACKUPPATH/$SITENAME_filesbackup.tar.gz $WEBROOT/$DRUPALSITEDIR; then
 	exit_error "Files backup failed, aborting!"
 	fi
 fi
