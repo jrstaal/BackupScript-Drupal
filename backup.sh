@@ -76,6 +76,7 @@ if [ "$BACKUPUSER" ]; then
 fi
 
 # Make folder with date of backup
+status_message "** Making directory \"$NOW\" **"
 mkdir $BACKUPPATH/$NOW
 
 # Dump database into SQL file
