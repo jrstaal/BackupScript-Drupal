@@ -2,6 +2,8 @@
 
 # Backupscript
 
+status_message "** Start creating the backup **"
+
 currentdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Define settings file
@@ -76,7 +78,7 @@ if [ "$BACKUPUSER" ]; then
 fi
 
 # Make folder with date of backup
-status_message "** Making directory \"$NOW\" **"
+status_message "** Creating backup directory \"$NOW\" **"
 if ! mkdir $BACKUPPATH/$NOW; then
 	exit_error "Failed to create backup folder, aborting!"
 fi
