@@ -65,8 +65,6 @@ if [ ! -f "$LOGFILE" ]; then
   fi
 fi
 
-status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-
 # Check Backup user
 if [ "$BACKUPUSER" ]; then
   if  [ ! "$BACKUPUSER" = "$USER" ]; then
@@ -78,6 +76,7 @@ fi
 
 # Dump database into SQL file
 if [ $DATABASEBACKUP = "YES" ]; then
+status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
 #PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME  > $BACKUPPATH/$DBNAME.$TIJD.sql
 #PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME  > $BACKUPPATH/$SITENAME.sql
 PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$SITENAME.sql.gz
