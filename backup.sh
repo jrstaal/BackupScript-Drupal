@@ -76,12 +76,12 @@ if [ "$BACKUPUSER" ]; then
 fi
 
 # Make folder with date of backup
-#mkdir $BACKUPPATH/$NOW
+mkdir $BACKUPPATH/$NOW
 
 # Dump database into SQL file
 if [ $DATABASEBACKUP = "YES" ]; then
 status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-	if ! PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$SITENAME.sql.gz; then
+	if ! PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
 	exit_error "Database backup failed, aborting!"
 	fi
 fi
