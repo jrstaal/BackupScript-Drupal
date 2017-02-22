@@ -6,7 +6,7 @@ currentdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Define settings file
 CONFIGFILE="$currentdir/settings.ini"
-NOW=$(date +"%Y-%m-%d_%H:%M:%S")
+NOW=$(date +"%Y-%m-%d_%H:%M")
 # Read and parse config file
 eval $(sed '/:/!d;/^ *#/d;s/:/ /;' < "$CONFIGFILE" | while read -r key val
 do
@@ -77,7 +77,9 @@ fi
 
 # Make folder with date of backup
 status_message "** Making directory \"$NOW\" **"
-mkdir $BACKUPPATH/$NOW
+if ! mkdir $BACKUPPATH/$NOW; then
+	exit_error "Failed to create backup folder, aborting!"
+fi
 
 # Dump database into SQL file
 if [ $DATABASEBACKUP = "YES" ]; then
@@ -90,7 +92,7 @@ fi
 # Backup files dir
 if [ $FILESBACKUP = "YES" ]; then
 status_message "** Performing FilesBackup from \"$WEBROOT/$DRUPALSITEDIR\" **"
-	if ! tar czf $BACKUPPATH/$SITENAME.filesbackup.tar.gz -C $WEBROOT/$DRUPALSITEDIR .; then
+	if ! tar czf $BACKUPPATH/$NOW/$SITENAME.filesbackup.tar.gz -C $WEBROOT/$DRUPALSITEDIR .; then
 	exit_error "Files backup failed, aborting!"
 	fi
 fi
