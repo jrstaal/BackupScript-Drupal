@@ -84,6 +84,12 @@ if ! mkdir $BACKUPPATH/$NOW; then
 	exit_error "Failed to create backup folder, aborting!"
 fi
 
+# Delete old backups and keep this backup plus one older backup
+status_message "** Deleting oldest backup **"
+if ! ls -d */ | head -n -2  | xargs rm -rf; then
+	exit_error "Failed to delete old backup folder, aborting!"
+fi
+
 # Dump database into SQL file
 if [ $DATABASEBACKUP = "YES" ]; then
 status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
