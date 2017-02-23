@@ -20,7 +20,7 @@ done
 )
 
 # Set full path to log
-LOGFILE="/var/log/drupal/dbbackup-$SITENAME.log"
+LOGFILE="/var/log/drupal/drupal-backup-$SITENAME.log"
 
 # Function to log to file
 log_message() {
