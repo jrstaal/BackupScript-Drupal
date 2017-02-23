@@ -103,8 +103,8 @@ fi
 # Dump MySQL database into SQL file
 if [ $DRUPALVERSION = "8" ]; then
 	if [ $DATABASEBACKUP = "YES" ]; then
-	status_message "** Performing Postgres DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-		if ! mysqldump -h $DBHOST -u $DBUSER -p $DBPASSWORD $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
+	status_message "** Performing MySQL DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
+		if ! mysqldump -h $DBHOST -u $DBUSER -p$DBPASSWORD $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
 		exit_error "Database backup failed, aborting!"
 		fi
 	fi
