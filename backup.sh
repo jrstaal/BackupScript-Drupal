@@ -118,4 +118,4 @@ status_message "** Performing FilesBackup from \"$WEBROOT/$DRUPALSITEDIR\" **"
 	fi
 fi
 
-status_message "** Finished creating the backup ;) **"
+status_message "** Finished creating the backup ;-) **"
