@@ -104,7 +104,7 @@ fi
 if [ $DRUPALVERSION = "8" ]; then
 	if [ $DATABASEBACKUP = "YES" ]; then
 	status_message "** Performing Postgres DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-		if ! mysqldump -h $DBHOST -u $DBUSER -p $DBPASSWORD -D $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
+		if ! mysqldump -h $DBHOST -u $DBUSER -p $DBPASSWORD $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
 		exit_error "Database backup failed, aborting!"
 		fi
 	fi
