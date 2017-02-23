@@ -90,11 +90,23 @@ if ! ls -d $BACKUPPATH/*/ | head -n -2  | xargs rm -rf; then
 	exit_error "Failed to delete old backup folder, aborting!"
 fi
 
-# Dump database into SQL file
-if [ $DATABASEBACKUP = "YES" ]; then
-status_message "** Performing DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
-	if ! PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
-	exit_error "Database backup failed, aborting!"
+# Dump Postgres database into SQL file
+if [ $DRUPALVERSION = "7" ]; then
+	if [ $DATABASEBACKUP = "YES" ]; then
+	status_message "** Performing Postgres DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
+		if ! PGPASSWORD="$DBPASSWORD" /usr/pgsql-9.3/bin/pg_dump -h $DBHOST -U $DBUSER $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
+		exit_error "Database backup failed, aborting!"
+		fi
+	fi
+fi
+
+# Dump MySQL database into SQL file
+if [ $DRUPALVERSION = "8" ]; then
+	if [ $DATABASEBACKUP = "YES" ]; then
+	status_message "** Performing Postgres DatabaseBackup \"$DBNAME\" from \"$DBHOST\" **"
+		if ! mysqldump --user=$DBUSER --password=$DBPASSWORD --host=$DBHOST $DBNAME | gzip -9 > $BACKUPPATH/$NOW/$SITENAME.sql.gz; then
+		exit_error "Database backup failed, aborting!"
+		fi
 	fi
 fi
 
